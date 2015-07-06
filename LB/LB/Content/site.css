@@ -1,0 +1,10 @@
+﻿
+.consoleLog {
+            background-color: #000000;
+            color: #ffd800;
+            border: thick solid #808080;
+            padding: 20px;
+            margin: 20px;
+            overflow-y: scroll;
+            height: 150px;
+        }

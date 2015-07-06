@@ -1,0 +1,196 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Bookies</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap theme -->
+    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="Content/site.css" rel="stylesheet">
+
+</head>
+
+<body role="document">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">LadsB</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Nav header</li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main">
+
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <h1>New example</h1>
+            <p>This is a template showcasing the use of SignalR to commuicate with the client. There are more features to come over here.</p>
+        </div>
+
+        <!--#@#-->
+        <div class="page-header">
+            <h1>Events</h1>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Race 1</h3>
+                    </div>
+                    <div class="panel-body">
+                        <input type="text" id="race1" value="1" />
+                        <input class="btn btn-primary" type="button" id="btnRace1" value="Set" />
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Race 4</h3>
+                    </div>
+                    <div class="panel-body">
+                        More Events
+                    </div>
+                </div>
+            </div><!-- /.col-sm-4 -->
+            <div class="col-sm-4">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Race 2</h3>
+                    </div>
+                    <div class="panel-body">
+                        <input type="text" id="race2" value="2" />
+                        <input class="btn btn-success" type="button" id="btnRace2" value="Set" />
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Race 5</h3>
+                    </div>
+                    <div class="panel-body">
+                        More Events
+                    </div>
+                </div>
+            </div><!-- /.col-sm-4 -->
+            <div class="col-sm-4">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Race 3</h3>
+                    </div>
+                    <div class="panel-body">
+                        <input type="text" id="race3" value="3" />
+                        <input class="btn btn-warning" type="button" id="btnRace3" value="Set" />
+                    </div>
+                </div>
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Race 6</h3>
+                    </div>
+                    <div class="panel-body">
+                        More Events
+                    </div>
+                </div>
+            </div><!-- /.col-sm-4 -->
+        </div>
+
+        <div class="well">
+            <div>Console Log :</div>
+            <div class="consoleLog">
+                <ul id="consoleLog"></ul>
+            </div>
+        </div>
+
+
+    </div> <!-- /container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/jquery.signalR-2.0.0.js"></script>
+    <script src="/signalr/hubs"></script>
+
+    <script src="Scripts/moment.js"></script>
+
+    <!--Add script to update the page and send messages.-->
+    <script type="text/javascript">
+        $(function () {
+            // Declare a proxy to reference the hub.
+            var event = $.connection.eventsHub;
+            // Create a function that the hub can call to broadcast messages.
+            event.client.broadcastMessage = function (name, message) {
+                // Html encode display name and message.
+                var encodedName = $('<div />').text(name).html();
+                var encodedMsg = $('<div />').text(message).html();
+                // Add the message to the page.
+                $('#consoleLog').prepend('<li>[' + moment().format('YYYY-MM-DD hh:mm:ss a') + '] ' + encodedName
+                    + ' is set to &nbsp;&nbsp;' + encodedMsg + '</li>');
+            };
+            // Get the user name and store it to prepend to messages.
+            $('#displayname').val('Bookie');
+            // Set initial focus to message input box.
+            $('#message').focus();
+            // Start the connection and enable logging.
+            $.connection.hub.logging = true;
+            $.connection.hub.start().done(function () {
+                $('#btnRace1').click(function () {
+                    // Call the Send method on the hub.
+                    event.server.send('race1', $('#race1').val());
+                    // Clear text box and reset focus for next comment.
+                    $('#race1').focus();
+                });
+                $('#btnRace2').click(function () {
+                    // Call the Send method on the hub.
+                    event.server.send('race2', $('#race2').val());
+                    // Clear text box and reset focus for next comment.
+                    $('#race2').focus();
+                });
+                $('#btnRace3').click(function () {
+                    // Call the Send method on the hub.
+                    event.server.send('race3', $('#race3').val());
+                    // Clear text box and reset focus for next comment.
+                    $('#race3').focus();
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
